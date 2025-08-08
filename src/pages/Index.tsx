@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { surveyConfig } from "@/config/surveyConfig";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 const Index = () => {
   return (
@@ -48,20 +49,27 @@ const Index = () => {
         </section>
 
         <section aria-labelledby="responses-heading" className="mt-12">
-          <h2 id="responses-heading" className="text-2xl font-semibold tracking-tight mb-4">Live responses</h2>
-          <p className="text-sm text-muted-foreground mb-4">Direct links to the live Google Sheets for each survey.</p>
-          <ul className="grid gap-3 md:grid-cols-3">
-            <li className="rounded-lg border p-4 bg-card/50">
-              <a href={surveyConfig.tenant.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Tenant responses sheet</a>
-            </li>
-            <li className="rounded-lg border p-4 bg-card/50">
-              <a href={surveyConfig.landlord.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Landlord responses sheet</a>
-            </li>
-            <li className="rounded-lg border p-4 bg-card/50">
-              <a href={surveyConfig.advisor.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Advisor responses sheet</a>
-            </li>
-          </ul>
+          <h2 id="responses-heading" className="text-2xl font-semibold tracking-tight mb-4">Perse Admin Only</h2>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="responses">
+              <AccordionTrigger className="text-sm">Show response links</AccordionTrigger>
+              <AccordionContent>
+                <ul className="list-disc pl-6 space-y-1 text-sm">
+                  <li>
+                    <a href={surveyConfig.tenant.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Tenant responses sheet</a>
+                  </li>
+                  <li>
+                    <a href={surveyConfig.landlord.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Landlord responses sheet</a>
+                  </li>
+                  <li>
+                    <a href={surveyConfig.advisor.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Advisor responses sheet</a>
+                  </li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </section>
+
 
       </main>
     </div>
