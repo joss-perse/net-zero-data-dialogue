@@ -27,11 +27,6 @@ const Index = () => {
             <p className="text-sm text-muted-foreground mb-4">Views on data sharing, sensitivity and practical safeguards.</p>
             <div className="flex items-center gap-3">
               <Link to="/surveys/tenant"><Button>Complete survey</Button></Link>
-              {surveyConfig.tenant.sheetUrl ? (
-                <a href={surveyConfig.tenant.sheetUrl} target="_blank" rel="noreferrer" className="text-sm text-primary underline-offset-4 hover:underline">Live responses</a>
-              ) : (
-                <span className="text-sm text-muted-foreground">Live sheet not set</span>
-              )}
             </div>
           </article>
 
@@ -40,11 +35,6 @@ const Index = () => {
             <p className="text-sm text-muted-foreground mb-4">Data needs, barriers, impacts and safeguard ideas.</p>
             <div className="flex items-center gap-3">
               <Link to="/surveys/landlord"><Button>Complete survey</Button></Link>
-              {surveyConfig.landlord.sheetUrl ? (
-                <a href={surveyConfig.landlord.sheetUrl} target="_blank" rel="noreferrer" className="text-sm text-primary underline-offset-4 hover:underline">Live responses</a>
-              ) : (
-                <span className="text-sm text-muted-foreground">Live sheet not set</span>
-              )}
             </div>
           </article>
 
@@ -53,11 +43,6 @@ const Index = () => {
             <p className="text-sm text-muted-foreground mb-4">Service context, meter-level needs and compliance.</p>
             <div className="flex items-center gap-3">
               <Link to="/surveys/advisor"><Button>Complete survey</Button></Link>
-              {surveyConfig.advisor.sheetUrl ? (
-                <a href={surveyConfig.advisor.sheetUrl} target="_blank" rel="noreferrer" className="text-sm text-primary underline-offset-4 hover:underline">Live responses</a>
-              ) : (
-                <span className="text-sm text-muted-foreground">Live sheet not set</span>
-              )}
             </div>
           </article>
         </section>
