@@ -9,7 +9,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Net Zero Energy Data Access Report</title>
-        <meta name="description" content="Surveys for tenants, landlords and advisors to shape a legal framework for landlord access to energy data for net zero." />
+        <meta name="description" content="Surveys for tenants, landlords, advisors and investors to shape a legal framework for landlord access to energy data for net zero." />
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.origin : ''} />
       </Helmet>
       <header className="bg-hero-gradient border-b">
@@ -51,6 +51,14 @@ const Index = () => {
               <Link to="/surveys/advisor"><Button>Complete survey</Button></Link>
             </div>
           </article>
+
+          <article className="rounded-lg border p-6 bg-card/50 transition-transform hover:-translate-y-0.5 hover:shadow-elegant">
+            <h2 className="text-xl font-medium mb-2">Financial institutions / investors survey</h2>
+            <p className="text-sm text-muted-foreground mb-4">Investor strategy, reporting, green lending and data needs.</p>
+            <div className="flex items-center gap-3">
+              <Link to="/surveys/investors"><Button>Complete survey</Button></Link>
+            </div>
+          </article>
         </section>
 
         <section aria-labelledby="responses-heading" className="mt-12">
@@ -68,6 +76,9 @@ const Index = () => {
                   </li>
                   <li>
                     <a href={surveyConfig.advisor.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Advisor responses sheet</a>
+                  </li>
+                  <li>
+                    <a href={surveyConfig.investor.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Investor responses sheet</a>
                   </li>
                 </ul>
               </AccordionContent>

@@ -11,6 +11,10 @@ export const surveyConfig = {
     endpoint: "",
     sheetUrl: "https://docs.google.com/spreadsheets/d/1a2xWXBmOGMgpsdCJHYfbj4EPMjWWmZPa1oOvZsHYNGw/edit?usp=sharing",
   },
+  investor: {
+    endpoint: "",
+    sheetUrl: "", // Add your Google Sheet URL for Investor survey responses
+  },
 } as const;
 
 export type SurveyKey = keyof typeof surveyConfig;
