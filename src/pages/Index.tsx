@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { surveyConfig } from "@/config/surveyConfig";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import heroImage from "@/assets/perse-hero.png";
 
 const Index = () => {
   return (
@@ -13,11 +14,24 @@ const Index = () => {
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.origin : ''} />
       </Helmet>
       <header className="bg-hero-gradient border-b">
-        <div className="container py-12 md:py-16">
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">Report: Legal framework for landlord access to energy data for net zero</h1>
-          <p className="text-lg text-muted-foreground max-w-3xl">
-            Contribute to evidence-based recommendations. Choose your survey below.
-          </p>
+        <div className="container py-12 md:py-16 grid gap-8 md:grid-cols-2 items-center">
+          <div>
+            <div className="inline-flex items-center rounded-full bg-accent/40 text-accent-foreground px-3 py-1 text-xs font-medium ring-1 ring-border mb-3">
+              Evidence-based net zero surveys
+            </div>
+            <p className="text-lg text-muted-foreground max-w-3xl mb-3">
+              Contribute to evidence-based recommendations. Choose your survey below.
+            </p>
+            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">Report: Legal framework for landlord access to energy data for net zero</h1>
+          </div>
+          <div className="relative">
+            <img
+              src={heroImage}
+              alt="Perse-inspired hero illustration showing energy and finance analytics cards"
+              className="w-full h-auto rounded-lg shadow-elegant"
+              loading="lazy"
+            />
+          </div>
         </div>
       </header>
 
