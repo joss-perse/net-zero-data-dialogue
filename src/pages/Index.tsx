@@ -24,7 +24,7 @@ const Index = () => {
             </p>
             <h1 className="text-2xl md:text-3xl font-normal tracking-tight">Legal Framework for Landlord Access to Energy Data — Let’s Hear Your Perspective</h1>
             <p className="text-sm md:text-base text-muted-foreground mt-3">
-              Ensuring net-zero success depends on high-quality data—but property owners often lack legal clarity to access tenants’ energy data.
+              Ensuring net-zero success depends on high-quality data—but property owners often lack legal clarity to access tenants energy data.
             </p>
             <p className="mt-4 text-sm font-medium">Why it matters:</p>
             <ul className="mt-1 list-disc pl-5 text-sm text-muted-foreground space-y-1">
