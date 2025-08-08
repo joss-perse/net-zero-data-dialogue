@@ -19,9 +19,6 @@ const Index = () => {
             <div className="inline-flex items-center rounded-full bg-accent/40 text-accent-foreground px-3 py-1 text-xs font-medium ring-1 ring-border mb-3">
               Evidence-based net zero surveys
             </div>
-            <p className="text-2xl md:text-3xl font-bold text-foreground max-w-3xl mb-3">
-              Contribute to evidence-based recommendations. Choose your survey below.
-            </p>
             <h1 className="text-2xl md:text-3xl font-normal tracking-tight">Legal Framework for Landlord Access to Energy Data — Let’s Hear Your Perspective</h1>
             <p className="text-sm md:text-base text-muted-foreground mt-3">
               Ensuring net-zero success depends on high-quality data—but property owners often lack legal clarity to access tenants energy data.
