@@ -19,10 +19,10 @@ const Index = () => {
             <div className="inline-flex items-center rounded-full bg-accent/40 text-accent-foreground px-3 py-1 text-xs font-medium ring-1 ring-border mb-3">
               Evidence-based net zero surveys
             </div>
-            <p className="text-lg text-muted-foreground max-w-3xl mb-3">
+            <p className="text-2xl md:text-3xl font-bold text-foreground max-w-3xl mb-3">
               Contribute to evidence-based recommendations. Choose your survey below.
             </p>
-            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">Report: Legal framework for landlord access to energy data for net zero</h1>
+            <h1 className="text-2xl md:text-3xl font-normal tracking-tight">Legal framework for landlord access to energy data for net zero</h1>
           </div>
           <div className="relative">
             <img
