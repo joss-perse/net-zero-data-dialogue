@@ -47,6 +47,22 @@ const Index = () => {
           </article>
         </section>
 
+        <section aria-labelledby="responses-heading" className="mt-12">
+          <h2 id="responses-heading" className="text-2xl font-semibold tracking-tight mb-4">Live responses</h2>
+          <p className="text-sm text-muted-foreground mb-4">Direct links to the live Google Sheets for each survey.</p>
+          <ul className="grid gap-3 md:grid-cols-3">
+            <li className="rounded-lg border p-4 bg-card/50">
+              <a href={surveyConfig.tenant.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Tenant responses sheet</a>
+            </li>
+            <li className="rounded-lg border p-4 bg-card/50">
+              <a href={surveyConfig.landlord.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Landlord responses sheet</a>
+            </li>
+            <li className="rounded-lg border p-4 bg-card/50">
+              <a href={surveyConfig.advisor.sheetUrl} target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Advisor responses sheet</a>
+            </li>
+          </ul>
+        </section>
+
       </main>
     </div>
   );
