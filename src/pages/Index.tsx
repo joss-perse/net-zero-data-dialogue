@@ -15,13 +15,8 @@ const Index = () => {
         <div className="container py-12 md:py-16">
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">Report: Legal framework for landlord access to energy data for net zero</h1>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            Contribute to evidence-based recommendations. Choose your survey below. Live responses are available via Google Sheets.
+            Contribute to evidence-based recommendations. Choose your survey below.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="#surveys" className="">
-              <Button variant="hero" size="lg">Start now</Button>
-            </Link>
-          </div>
         </div>
       </header>
 
@@ -67,9 +62,6 @@ const Index = () => {
           </article>
         </section>
 
-        <aside className="mt-10 text-sm text-muted-foreground">
-          To connect the forms to your Google Sheet, deploy a Google Apps Script Web App that writes incoming JSON to a Sheet, then paste the three Web App URLs and Sheet links into src/config/surveyConfig.ts.
-        </aside>
       </main>
     </div>
   );
