@@ -22,7 +22,19 @@ const Index = () => {
             <p className="text-2xl md:text-3xl font-bold text-foreground max-w-3xl mb-3">
               Contribute to evidence-based recommendations. Choose your survey below.
             </p>
-            <h1 className="text-2xl md:text-3xl font-normal tracking-tight">Legal framework for landlord access to energy data for net zero</h1>
+            <h1 className="text-2xl md:text-3xl font-normal tracking-tight">Legal Framework for Landlord Access to Energy Data — Let’s Hear Your Perspective</h1>
+            <p className="text-sm md:text-base text-muted-foreground mt-3">
+              Ensuring net-zero success depends on high-quality data—but property owners often lack legal clarity to access tenants’ energy data.
+            </p>
+            <p className="mt-4 text-sm font-medium">Why it matters:</p>
+            <ul className="mt-1 list-disc pl-5 text-sm text-muted-foreground space-y-1">
+              <li>
+                A recent British Property Federation study highlights that landlords frequently cannot access occupier energy data, making it hard to establish emissions baselines, prioritise retrofits, or track carbon reduction progress.
+              </li>
+              <li>
+                While green leases and voluntary data-sharing tools help in commercial settings, no legal requirement currently mandates this data exchange between landlords and tenants.
+              </li>
+            </ul>
           </div>
           <div className="relative">
             <img
