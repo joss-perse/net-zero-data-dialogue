@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { surveyConfig } from "@/config/surveyConfig";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import heroImage from "@/assets/perse-hero.png";
+
 
 const Index = () => {
   return (
@@ -14,7 +14,7 @@ const Index = () => {
         <link rel="canonical" href={typeof window !== 'undefined' ? window.location.origin : ''} />
       </Helmet>
       <header className="bg-hero-gradient border-b">
-        <div className="container py-12 md:py-16 grid gap-8 md:grid-cols-2 items-center">
+        <div className="container py-12 md:py-16">
           <div>
             <div className="inline-flex items-center rounded-full bg-accent/40 text-accent-foreground px-3 py-1 text-xs font-medium ring-1 ring-border mb-3">
               Evidence-based net zero surveys
@@ -36,14 +36,6 @@ const Index = () => {
               </li>
             </ul>
           </div>
-          <div className="relative">
-            <img
-              src={heroImage}
-              alt="Perse-inspired hero illustration showing energy and finance analytics cards"
-              className="w-full h-auto rounded-lg shadow-elegant"
-              loading="lazy"
-            />
-          </div>
         </div>
       </header>
 
@@ -53,7 +45,7 @@ const Index = () => {
             These surveys gather evidence about the risks and benefits of making meter-level energy consumption data available without occupant consent for carbon reporting (GDPR basis: legitimate interests).
           </p>
         </section>
-        <section className="grid gap-6 md:grid-cols-3">
+        <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <article className="rounded-lg border p-6 bg-card/50 transition-transform hover:-translate-y-0.5 hover:shadow-elegant">
             <h2 className="text-xl font-medium mb-2">Tenant survey</h2>
             <p className="text-sm text-muted-foreground mb-4">Views on data sharing, sensitivity and practical safeguards.</p>
