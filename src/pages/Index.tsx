@@ -22,6 +22,11 @@ const Index = () => {
       </header>
 
       <main id="surveys" className="container py-10 md:py-14">
+        <section className="mb-8">
+          <p className="text-sm text-muted-foreground max-w-3xl">
+            These surveys gather evidence about the risks and benefits of making meter-level energy consumption data available without occupant consent for carbon reporting (GDPR basis: legitimate interests).
+          </p>
+        </section>
         <section className="grid gap-6 md:grid-cols-3">
           <article className="rounded-lg border p-6 bg-card/50 transition-transform hover:-translate-y-0.5 hover:shadow-elegant">
             <h2 className="text-xl font-medium mb-2">Tenant survey</h2>
