@@ -10,6 +10,7 @@ import TenantSurvey from "./pages/surveys/TenantSurvey";
 import LandlordSurvey from "./pages/surveys/LandlordSurvey";
 import AdvisorSurvey from "./pages/surveys/AdvisorSurvey";
 import InvestorSurvey from "./pages/surveys/InvestorSurvey";
+import AppHeader from "@/components/AppHeader";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <AppHeader />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/surveys/tenant" element={<TenantSurvey />} />

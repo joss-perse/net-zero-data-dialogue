@@ -28,7 +28,7 @@ const SurveyLayout = ({ title, description, children }: PropsWithChildren<Survey
       <header className="border-b">
         <nav className="container flex items-center justify-between py-4">
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            ← Back to report
+            ← Back to introduction
           </Link>
           <span className="text-sm text-muted-foreground">Legal framework for landlord access to energy data</span>
         </nav>
