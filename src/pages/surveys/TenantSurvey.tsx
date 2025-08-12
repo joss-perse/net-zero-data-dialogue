@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { submitToGoogleSheet } from "@/lib/submitToGoogle";
 import { surveyConfig } from "@/config/surveyConfig";
+import DynamicSurveyForm from "@/components/DynamicSurveyForm";
 
 const schema = z.object({
   businessIndustry: z.string().min(1, "Please enter your industry or SIC code"),
@@ -38,6 +39,17 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const TenantSurvey = () => {
+  if (surveyConfig.tenant.questionsCsvUrl) {
+    return (
+      <SurveyLayout
+        title="Tenant Survey"
+        description="Help shape a practical, privacy-conscious framework for landlord access to energy data in pursuit of net zero."
+      >
+        <DynamicSurveyForm survey="tenant" endpoint={surveyConfig.tenant.endpoint} />
+      </SurveyLayout>
+    );
+  }
+
   const { toast } = useToast();
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),

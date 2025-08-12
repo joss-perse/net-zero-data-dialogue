@@ -1,0 +1,13 @@
+section,order,key,label,type,options,required,placeholder,help
+About you,1,business_industry,Which industry or SIC code do you operate in?,text,,TRUE,e.g. 47.11 Retail sale in non-specialised stores,
+About you,2,is_sole_trader,Are you a sole trader?,yesno,,TRUE,,
+About you,3,net_zero_importance,How important do you think the environment and our transition to net zero is out of 10?,radio,1|2|3|4|5|6|7|8|9|10,TRUE,,
+Different kinds of data sharing,1,share_annual_estimate,Would you be happy for your annual estimated energy consumption to be shared with your landlord for carbon reporting?,yesno,,TRUE,,
+Different kinds of data sharing,2,share_annual_to_others,Would you be happy for annual estimated consumption to be shared with other entities who require it for carbon reporting (e.g. lenders, managers)?,yesno,,FALSE,,
+Different kinds of data sharing,3,monthly_reads_view,Does your view change for monthly meter reads? If yes, why?,textarea,,FALSE,,
+Different kinds of data sharing,4,half_hourly_view,Does your view change for half-hourly consumption data? If yes, why?,textarea,,FALSE,,
+Potential concerns,1,risks_general,What risks are you concerned about, if any, for your energy consumption data to be shared?,textarea,,FALSE,,
+Potential concerns,2,risks_annual_vs_monthly,How do the risks change between annual estimated consumption and monthly meter reads?,textarea,,FALSE,,
+Potential concerns,3,risks_monthly_vs_halfhourly,How do the risks change between monthly meter reads and half hourly consumption data?,textarea,,FALSE,,
+Potential concerns,4,aggregation_preference,If you are a sole trader, would you be happy for your consumption to be aggregated so your meter isn't identifiable?,textarea,,FALSE,,
+Short to mid term impact,1,impacts_if_not_available,In the short to mid term, what environmental or financial impacts could happen if meter-level data is not made available?,textarea,,FALSE,,
