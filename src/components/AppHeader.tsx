@@ -7,8 +7,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
 import { surveyConfig } from "@/config/surveyConfig";
+import { useToast } from "@/hooks/use-toast";
 import { Menu } from "lucide-react";
 
 const AppHeader = () => {
@@ -18,6 +22,34 @@ const AppHeader = () => {
     { label: "Advisor responses", url: surveyConfig.advisor.sheetUrl },
     { label: "Investor responses", url: surveyConfig.investor.sheetUrl },
   ];
+
+  const surveys = [
+    { key: "tenant", label: "Tenant" },
+    { key: "landlord", label: "Landlord" },
+    { key: "advisor", label: "Advisor" },
+    { key: "investor", label: "Investor" },
+  ] as const;
+
+  const { toast } = useToast();
+
+  const handleUploadClick = (key: string) => {
+    const input = document.getElementById(`upload-${key}-csv`) as HTMLInputElement | null;
+    input?.click();
+  };
+
+  const onFileChange = async (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      localStorage.setItem(`survey:overrideCsv:${key}`, text);
+      toast({ title: "CSV uploaded", description: `${file.name} applied for ${key} survey.` });
+    } catch (err) {
+      toast({ title: "Upload failed", description: "Could not read CSV file.", variant: "destructive" as any });
+    } finally {
+      e.currentTarget.value = "";
+    }
+  };
 
   return (
     <header className="h-12 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -38,6 +70,31 @@ const AppHeader = () => {
                 </a>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+              <DropdownMenuLabel>Survey questions</DropdownMenuLabel>
+              {surveys.map((s) => (
+                <DropdownMenuSub key={s.key}>
+                  <DropdownMenuSubTrigger>{s.label}</DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem asChild>
+                      <a
+                        href="/templates/survey-questions-template.csv"
+                        download={`${s.key}-questions-template.csv`}
+                      >
+                        Download {s.label} template
+                      </a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onSelect={(e) => {
+                        e.preventDefault();
+                        handleUploadClick(s.key);
+                      }}
+                    >
+                      Upload CSV to override…
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              ))}
+              <DropdownMenuSeparator />
               <DropdownMenuLabel>Survey responses</DropdownMenuLabel>
               {responses.map((r) => (
                 r.url ? (
@@ -56,6 +113,16 @@ const AppHeader = () => {
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Net Zero Energy Data Access
           </Link>
+          {surveys.map((s) => (
+            <input
+              key={s.key}
+              id={`upload-${s.key}-csv`}
+              type="file"
+              accept=".csv,text/csv"
+              className="sr-only"
+              onChange={(e) => onFileChange(s.key, e)}
+            />
+          ))}
         </div>
       </div>
     </header>

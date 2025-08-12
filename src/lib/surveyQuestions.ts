@@ -23,7 +23,58 @@ export interface QuestionDef {
  * - options: pipe-separated for radio (e.g., "Yes|No|Maybe")
  * - required: TRUE/FALSE or 1/0
  */
+function parseQuestionsFromCsv(csv: string): QuestionDef[] {
+  const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true });
+  if (parsed.errors?.length) {
+    console.warn("CSV parse warnings", parsed.errors);
+  }
+
+  const rows = (parsed.data as any[]).filter(Boolean);
+  const questions: QuestionDef[] = rows.map((r, idx) => {
+    const rawType = String(r.type ?? r.Type ?? "").toLowerCase().trim();
+    const type: QuestionType = (rawType === "" ? "textarea" : (rawType as QuestionType));
+    const optsRaw = String(r.options ?? r.Options ?? "");
+    const options = optsRaw ? optsRaw.split("|").map((s) => s.trim()).filter(Boolean) : undefined;
+    const reqRaw = String(r.required ?? r.Required ?? "").toLowerCase().trim();
+    const required = ["true", "1", "yes", "y"].includes(reqRaw);
+    const orderVal = Number(r.order ?? r.Order ?? idx + 1);
+    const keyRaw = String(r.key ?? r.Key ?? "").trim();
+    const label = String(r.label ?? r.Label ?? "").trim();
+    const key = keyRaw || slugify(label);
+    return {
+      order: Number.isFinite(orderVal) ? orderVal : idx + 1,
+      section: String(r.section ?? r.Section ?? "General").trim() || "General",
+      key,
+      label: label || `Question ${idx + 1}`,
+      type: rawType === "yesno" ? "yesno" : type,
+      options: rawType === "yesno" ? ["Yes", "No"] : options,
+      required,
+      placeholder: String(r.placeholder ?? r.Placeholder ?? "") || undefined,
+      help: String(r.help ?? r.Help ?? "") || undefined,
+    } satisfies QuestionDef;
+  });
+
+  const sorted = questions.sort((a, b) =>
+    a.section.localeCompare(b.section) || a.order - b.order
+  );
+
+  return sorted;
+}
+
 export async function fetchSurveyQuestions(survey: SurveyKey): Promise<QuestionDef[] | null> {
+  // 1) Local override via uploaded CSV (stored in localStorage)
+  try {
+    if (typeof window !== "undefined") {
+      const override = localStorage.getItem(`survey:overrideCsv:${survey}`);
+      if (override && override.trim()) {
+        return parseQuestionsFromCsv(override);
+      }
+    }
+  } catch (e) {
+    console.warn("Local CSV override check failed", e);
+  }
+
+  // 2) Fallback to configured CSV URL
   const url = surveyConfig[survey]?.questionsCsvUrl;
   if (!url) return null;
 
@@ -31,44 +82,7 @@ export async function fetchSurveyQuestions(survey: SurveyKey): Promise<QuestionD
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
     const csv = await res.text();
-
-    const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true });
-    if (parsed.errors?.length) {
-      // Still try to proceed with whatever parsed
-      console.warn("CSV parse warnings", parsed.errors);
-    }
-
-    const rows = (parsed.data as any[]).filter(Boolean);
-    const questions: QuestionDef[] = rows.map((r, idx) => {
-      const rawType = String(r.type ?? r.Type ?? "").toLowerCase().trim();
-      const type: QuestionType = (rawType === "" ? "textarea" : (rawType as QuestionType));
-      const optsRaw = String(r.options ?? r.Options ?? "");
-      const options = optsRaw ? optsRaw.split("|").map((s) => s.trim()).filter(Boolean) : undefined;
-      const reqRaw = String(r.required ?? r.Required ?? "").toLowerCase().trim();
-      const required = ["true", "1", "yes", "y"].includes(reqRaw);
-      const orderVal = Number(r.order ?? r.Order ?? idx + 1);
-      const keyRaw = String(r.key ?? r.Key ?? "").trim();
-      const label = String(r.label ?? r.Label ?? "").trim();
-      const key = keyRaw || slugify(label);
-      return {
-        order: Number.isFinite(orderVal) ? orderVal : idx + 1,
-        section: String(r.section ?? r.Section ?? "General").trim() || "General",
-        key,
-        label: label || `Question ${idx + 1}`,
-        type: rawType === "yesno" ? "yesno" : type,
-        options: rawType === "yesno" ? ["Yes", "No"] : options,
-        required,
-        placeholder: String(r.placeholder ?? r.Placeholder ?? "") || undefined,
-        help: String(r.help ?? r.Help ?? "") || undefined,
-      } satisfies QuestionDef;
-    });
-
-    // sort by section then order
-    const sorted = questions.sort((a, b) =>
-      a.section.localeCompare(b.section) || a.order - b.order
-    );
-
-    return sorted;
+    return parseQuestionsFromCsv(csv);
   } catch (e) {
     console.error("Failed to load survey questions", e);
     return null;
