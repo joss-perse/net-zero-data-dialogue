@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { submitToGoogleSheet } from "@/lib/submitToGoogle";
 import { surveyConfig } from "@/config/surveyConfig";
+import DynamicSurveyForm from "@/components/DynamicSurveyForm";
 
 const schema = z.object({
   netZeroStrategy: z.string().optional(),
@@ -47,6 +48,17 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const LandlordSurvey = () => {
+  if (surveyConfig.landlord.questionsCsvUrl) {
+    return (
+      <SurveyLayout
+        title="Landlord Survey"
+        description="Tell us about your data needs, constraints and impacts to help shape a workable framework."
+      >
+        <DynamicSurveyForm survey="landlord" endpoint={surveyConfig.landlord.endpoint} />
+      </SurveyLayout>
+    );
+  }
+
   const { toast } = useToast();
   const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: {} });
 

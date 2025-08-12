@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { useToast } from "@/hooks/use-toast";
 import { submitToGoogleSheet } from "@/lib/submitToGoogle";
 import { surveyConfig } from "@/config/surveyConfig";
+import DynamicSurveyForm from "@/components/DynamicSurveyForm";
 
 const schema = z.object({
   // Current status
@@ -46,6 +47,17 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const InvestorSurvey = () => {
+  if (surveyConfig.investor?.questionsCsvUrl) {
+    return (
+      <SurveyLayout
+        title="Financial Institutions / Investors Survey"
+        description="Help us understand investor needs and impacts to shape a practical framework for landlord access to energy data."
+      >
+        <DynamicSurveyForm survey="investor" endpoint={surveyConfig.investor?.endpoint || ""} />
+      </SurveyLayout>
+    );
+  }
+
   const { toast } = useToast();
   const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: {} });
 

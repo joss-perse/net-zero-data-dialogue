@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { useToast } from "@/hooks/use-toast";
 import { submitToGoogleSheet } from "@/lib/submitToGoogle";
 import { surveyConfig } from "@/config/surveyConfig";
+import DynamicSurveyForm from "@/components/DynamicSurveyForm";
 
 const schema = z.object({
   businessSummary: z.string().optional(),
@@ -28,6 +29,17 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const AdvisorSurvey = () => {
+  if (surveyConfig.advisor.questionsCsvUrl) {
+    return (
+      <SurveyLayout
+        title="Advisor / Intermediary Survey"
+        description="Provide insight on services, data needs and impacts to inform sensible safeguards."
+      >
+        <DynamicSurveyForm survey="advisor" endpoint={surveyConfig.advisor.endpoint} />
+      </SurveyLayout>
+    );
+  }
+
   const { toast } = useToast();
   const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: {} });
 
