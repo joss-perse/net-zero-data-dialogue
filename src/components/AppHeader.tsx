@@ -11,9 +11,15 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { surveyConfig } from "@/config/surveyConfig";
 import { useToast } from "@/hooks/use-toast";
-import { Menu } from "lucide-react";
+import { Menu, HelpCircle } from "lucide-react";
 
 const AppHeader = () => {
   const responses = [
@@ -65,8 +71,29 @@ const AppHeader = () => {
             <DropdownMenuContent align="start" className="min-w-64">
               <DropdownMenuLabel>Tools</DropdownMenuLabel>
               <DropdownMenuItem asChild>
-                <a href="/templates/survey-questions-template.csv" download>
+                <a href="/templates/survey-questions-template.csv" download className="flex items-center justify-between">
                   Download CSV template
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <HelpCircle className="h-3 w-3 ml-2 text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent side="right" className="max-w-xs">
+                        <div className="text-xs space-y-1">
+                          <p><strong>CSV columns:</strong></p>
+                          <p><strong>section:</strong> Groups questions (e.g., "About you")</p>
+                          <p><strong>order:</strong> Question order within section</p>
+                          <p><strong>key:</strong> Unique field identifier</p>
+                          <p><strong>label:</strong> Question text shown to user</p>
+                          <p><strong>type:</strong> Input type (text, yesno, radio, textarea)</p>
+                          <p><strong>options:</strong> For radio/select (pipe-separated)</p>
+                          <p><strong>required:</strong> TRUE/FALSE for validation</p>
+                          <p><strong>placeholder:</strong> Helper text in input</p>
+                          <p><strong>help:</strong> Additional guidance text</p>
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </a>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
