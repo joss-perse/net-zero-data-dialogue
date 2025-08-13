@@ -39,18 +39,28 @@ const AppHeader = () => {
   const { toast } = useToast();
 
   const handleUploadClick = (key: string) => {
+    console.log('handleUploadClick called with key:', key);
     const input = document.getElementById(`upload-${key}-csv`) as HTMLInputElement | null;
+    console.log('Found input element:', input);
     input?.click();
   };
 
   const onFileChange = async (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('onFileChange called with key:', key);
     const file = e.target.files?.[0];
-    if (!file) return;
+    console.log('Selected file:', file);
+    if (!file) {
+      console.log('No file selected');
+      return;
+    }
     try {
       const text = await file.text();
+      console.log('File text length:', text.length);
       localStorage.setItem(`survey:overrideCsv:${key}`, text);
+      console.log('Saved to localStorage with key:', `survey:overrideCsv:${key}`);
       toast({ title: "CSV uploaded", description: `${file.name} applied for ${key} survey.` });
     } catch (err) {
+      console.error('Error reading file:', err);
       toast({ title: "Upload failed", description: "Could not read CSV file.", variant: "destructive" as any });
     } finally {
       e.currentTarget.value = "";
