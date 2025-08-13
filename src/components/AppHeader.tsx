@@ -100,6 +100,11 @@ const AppHeader = () => {
                   </TooltipProvider>
                 </a>
               </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/add-question-guide">
+                  Add new question guide
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Survey questions</DropdownMenuLabel>
               {surveys.map((s) => (

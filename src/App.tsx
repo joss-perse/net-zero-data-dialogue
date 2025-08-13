@@ -10,6 +10,7 @@ import TenantSurvey from "./pages/surveys/TenantSurvey";
 import LandlordSurvey from "./pages/surveys/LandlordSurvey";
 import AdvisorSurvey from "./pages/surveys/AdvisorSurvey";
 import InvestorSurvey from "./pages/surveys/InvestorSurvey";
+import AddQuestionGuide from "./pages/AddQuestionGuide";
 import AppHeader from "@/components/AppHeader";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/surveys/landlord" element={<LandlordSurvey />} />
             <Route path="/surveys/advisor" element={<AdvisorSurvey />} />
             <Route path="/surveys/investors" element={<InvestorSurvey />} />
+            <Route path="/add-question-guide" element={<AddQuestionGuide />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
