@@ -80,16 +80,20 @@ const AppHeader = () => {
                       </TooltipTrigger>
                       <TooltipContent side="right" className="max-w-xs">
                         <div className="text-xs space-y-1">
-                          <p><strong>CSV columns:</strong></p>
-                          <p><strong>section:</strong> Groups questions (e.g., "About you")</p>
-                          <p><strong>order:</strong> Question order within section</p>
-                          <p><strong>key:</strong> Unique field identifier</p>
-                          <p><strong>label:</strong> Question text shown to user</p>
-                          <p><strong>type:</strong> Input type (text, yesno, radio, textarea)</p>
-                          <p><strong>options:</strong> For radio/select (pipe-separated)</p>
-                          <p><strong>required:</strong> TRUE/FALSE for validation</p>
-                          <p><strong>placeholder:</strong> Helper text in input</p>
-                          <p><strong>help:</strong> Additional guidance text</p>
+                          <p><strong>How to add questions to CSV:</strong></p>
+                          <p><strong>1. section:</strong> Group name (e.g., "About you")</p>
+                          <p><strong>2. order:</strong> Number within section (1, 2, 3...)</p>
+                          <p><strong>3. key:</strong> Unique ID (snake_case, e.g., "business_size")</p>
+                          <p><strong>4. label:</strong> Question text shown to user</p>
+                          <p><strong>5. type:</strong> text | textarea | radio | yesno | number</p>
+                          <p><strong>6. options:</strong> For radio: option1|option2|option3</p>
+                          <p><strong>7. required:</strong> TRUE or FALSE</p>
+                          <p><strong>8. placeholder:</strong> Helper text (optional)</p>
+                          <p><strong>9. help:</strong> Additional guidance (optional)</p>
+                          <p className="mt-2 text-xs text-muted-foreground">
+                            <strong>Example row:</strong><br/>
+                            Business info,1,company_size,How many employees?,radio,1-10|11-50|51+,TRUE,,
+                          </p>
                         </div>
                       </TooltipContent>
                     </Tooltip>
