@@ -13,7 +13,5 @@ Potential concerns,1,risks_general,What risks are you concerned about, if any, f
 Potential concerns,2,risks_annual_vs_monthly,How do the risks change between annual estimated consumption and monthly meter reads?,textarea,,FALSE,,
 Potential concerns,3,risks_monthly_vs_halfhourly,How do the risks change between monthly meter reads and half hourly consumption data?,textarea,,FALSE,,
 Potential concerns,4,aggregation_preference,If you are a sole trader, would you be happy for your consumption to be aggregated so your meter isn't identifiable?,textarea,,FALSE,,
-Potential concerns,5,data_security_concerns,What data security and privacy concerns do you have?,textarea,,FALSE,,
 Short to mid term impact,1,impacts_if_not_available,In the short to mid term, what environmental or financial impacts could happen if meter-level data is not made available?,textarea,,FALSE,,
 Short to mid term impact,2,business_impact_without_data,How would your business be impacted if energy data sharing was not available?,textarea,,FALSE,,
-Short to mid term impact,3,regulatory_compliance_impact,How would this affect regulatory compliance requirements?,textarea,,FALSE,,
