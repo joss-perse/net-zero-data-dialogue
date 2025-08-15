@@ -21,7 +21,7 @@ const Index = () => {
             </div>
             <h1 className="text-2xl md:text-3xl font-normal tracking-tight">Legal Framework for Landlord Access to Energy Data — Let’s Hear Your Perspective</h1>
             <p className="text-sm md:text-base text-muted-foreground mt-3">
-              Ensuring net-zero success depends on high-quality data—but property owners often lack legal clarity to access tenants energy data.
+              Net-zero success depends on high-quality data, which increasingly is recognised as meter data. But barriers remain as to how meter data can be obtained appropriately.
             </p>
             <p className="mt-4 text-sm font-medium">Why it matters:</p>
             <ul className="mt-1 list-disc pl-5 text-sm text-muted-foreground space-y-1">
@@ -29,7 +29,7 @@ const Index = () => {
                 A recent British Property Federation study highlights that landlords frequently cannot access occupier energy data, making it hard to establish emissions baselines, prioritise retrofits, or track carbon reduction progress.
               </li>
               <li>
-                While green leases and voluntary data-sharing tools help in commercial settings, no legal requirement currently mandates this data exchange between landlords and tenants.
+                While green leases and voluntary data-sharing tools can help, barriers remain, together with a lack of clarity on an appropriate legal framework.
               </li>
             </ul>
           </div>
@@ -39,7 +39,7 @@ const Index = () => {
       <main id="surveys" className="container py-10 md:py-14">
         <section className="mb-8">
           <p className="text-sm text-muted-foreground max-w-3xl">
-            These surveys gather evidence about the risks and benefits of making meter-level energy consumption data available without occupant consent for carbon reporting (GDPR basis: legitimate interests).
+            These surveys seek to gather evidence about the risks and benefits of making meter-level energy consumption data available without occupant consent for carbon reporting (GDPR basis: legitimate interest).
           </p>
         </section>
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
