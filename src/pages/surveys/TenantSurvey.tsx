@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { submitToGoogleSheet } from "@/lib/submitToGoogle";
 import { surveyConfig } from "@/config/surveyConfig";
 import DynamicSurveyForm from "@/components/DynamicSurveyForm";
+import { Download } from "lucide-react";
 
 const schema = z.object({
   businessIndustry: z.string().min(1, "Please enter your industry or SIC code"),
@@ -448,7 +449,13 @@ const TenantSurvey = () => {
           </section>
 
           <div className="flex items-center justify-between gap-4 pt-2">
-            <Button type="submit" variant="hero">Submit response</Button>
+            <div className="flex items-center gap-4">
+              <Button type="submit" variant="hero">Submit response</Button>
+              <a href="/templates/tenant-survey-template.csv" download className="flex items-center gap-2 text-sm text-primary underline-offset-4 hover:underline">
+                <Download size={16} />
+                Download CSV Template
+              </a>
+            </div>
             {surveyConfig.tenant.sheetUrl ? (
               <a
                 href={surveyConfig.tenant.sheetUrl}

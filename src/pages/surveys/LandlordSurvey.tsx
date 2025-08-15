@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { submitToGoogleSheet } from "@/lib/submitToGoogle";
 import { surveyConfig } from "@/config/surveyConfig";
 import DynamicSurveyForm from "@/components/DynamicSurveyForm";
+import { Download } from "lucide-react";
 
 const schema = z.object({
   netZeroStrategy: z.string().optional(),
@@ -299,7 +300,13 @@ const LandlordSurvey = () => {
           </section>
 
           <div className="flex items-center justify-between gap-4 pt-2">
-            <Button type="submit" variant="hero">Submit response</Button>
+            <div className="flex items-center gap-4">
+              <Button type="submit" variant="hero">Submit response</Button>
+              <a href="/templates/landlord-survey-template.csv" download className="flex items-center gap-2 text-sm text-primary underline-offset-4 hover:underline">
+                <Download size={16} />
+                Download CSV Template
+              </a>
+            </div>
             {surveyConfig.landlord.sheetUrl ? (
               <a href={surveyConfig.landlord.sheetUrl} target="_blank" rel="noreferrer" className="text-sm text-primary underline-offset-4 hover:underline">View live responses (Google Sheet)</a>
             ) : (
