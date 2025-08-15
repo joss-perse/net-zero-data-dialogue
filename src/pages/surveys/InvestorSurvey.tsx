@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { submitToGoogleSheet } from "@/lib/submitToGoogle";
 import { surveyConfig } from "@/config/surveyConfig";
 import DynamicSurveyForm from "@/components/DynamicSurveyForm";
-import { Download } from "lucide-react";
+import { Download, Upload } from "lucide-react";
 
 const schema = z.object({
   // Current status
@@ -62,6 +62,23 @@ const InvestorSurvey = () => {
   const { toast } = useToast();
   const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: {} });
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type === 'text/csv') {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          toast({ title: "File uploaded", description: "CSV file uploaded successfully. Please review and edit the form as needed." });
+        } catch (error) {
+          toast({ title: "Upload failed", description: "Failed to parse CSV file.", variant: "destructive" });
+        }
+      };
+      reader.readAsText(file);
+    } else {
+      toast({ title: "Invalid file", description: "Please upload a CSV file.", variant: "destructive" });
+    }
+  };
+
   const onSubmit = async (values: FormValues) => {
     try {
       await submitToGoogleSheet(surveyConfig.investor?.endpoint || "", { form: "investor", ...values });
@@ -77,6 +94,26 @@ const InvestorSurvey = () => {
       title="Financial Institutions / Investors Survey"
       description="Help us understand investor needs and impacts to shape a practical framework for landlord access to energy data."
     >
+      <div className="mb-6 flex flex-wrap items-center gap-4 rounded-md border bg-card/50 p-4">
+        <a href="/templates/investor-survey-template.csv" download className="flex items-center gap-2 text-sm text-primary underline-offset-4 hover:underline">
+          <Download size={16} />
+          Download CSV Template
+        </a>
+        <div className="flex items-center gap-2">
+          <label htmlFor="csv-upload" className="flex cursor-pointer items-center gap-2 text-sm text-primary underline-offset-4 hover:underline">
+            <Upload size={16} />
+            Upload Completed CSV
+          </label>
+          <input
+            id="csv-upload"
+            type="file"
+            accept=".csv"
+            onChange={handleFileUpload}
+            className="hidden"
+          />
+        </div>
+      </div>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <aside className="rounded-md border bg-card/50 p-4 text-sm text-muted-foreground">
@@ -255,13 +292,7 @@ const InvestorSurvey = () => {
           </section>
 
           <div className="flex items-center justify-between gap-4 pt-2">
-            <div className="flex items-center gap-4">
-              <Button type="submit" variant="hero">Submit response</Button>
-              <a href="/templates/investor-survey-template.csv" download className="flex items-center gap-2 text-sm text-primary underline-offset-4 hover:underline">
-                <Download size={16} />
-                Download CSV Template
-              </a>
-            </div>
+            <Button type="submit" variant="hero">Submit response</Button>
             {surveyConfig.investor?.sheetUrl ? (
               <a href={surveyConfig.investor.sheetUrl} target="_blank" rel="noreferrer" className="text-sm text-primary underline-offset-4 hover:underline">View live responses (Google Sheet)</a>
             ) : (
