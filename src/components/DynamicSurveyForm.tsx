@@ -38,20 +38,7 @@ const DynamicSurveyForm: React.FC<DynamicSurveyFormProps> = ({ survey, endpoint 
     };
   }, [survey]);
 
-  // If not configured, let caller render fallback static form
-  if (!loading && !questions) return null;
-
-  // Simple loading state
-  if (loading) {
-    return (
-      <div className="space-y-6">
-        <div className="h-4 w-48 bg-muted animate-pulse rounded" />
-        <div className="h-24 w-full bg-muted animate-pulse rounded" />
-        <div className="h-10 w-40 bg-muted animate-pulse rounded" />
-      </div>
-    );
-  }
-
+  // Always call hooks in the same order
   const schema = useMemo(() => buildZodSchema(questions || []), [questions]);
   const defaultValues = useMemo(() => {
     const v: Record<string, any> = {};
@@ -76,6 +63,20 @@ const DynamicSurveyForm: React.FC<DynamicSurveyFormProps> = ({ survey, endpoint 
       toast({ title: "Submission failed", description: e.message, variant: "destructive" as any });
     }
   };
+
+  // If not configured, let caller render fallback static form
+  if (!loading && !questions) return null;
+
+  // Simple loading state
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="h-4 w-48 bg-muted animate-pulse rounded" />
+        <div className="h-24 w-full bg-muted animate-pulse rounded" />
+        <div className="h-10 w-40 bg-muted animate-pulse rounded" />
+      </div>
+    );
+  }
 
   let sectionIndex = 0;
 
