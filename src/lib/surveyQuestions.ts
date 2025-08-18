@@ -1,6 +1,14 @@
 import Papa from "papaparse";
 import * as z from "zod";
 import { surveyConfig, SurveyKey } from "@/config/surveyConfig";
+import { 
+  validateCsvFile, 
+  validateQuestionData, 
+  secureLocalStorage, 
+  getSecureLocalStorage, 
+  validateExternalUrl, 
+  rateLimiter 
+} from "@/lib/security";
 
 export type QuestionType = "text" | "textarea" | "radio" | "yesno" | "number";
 
@@ -24,13 +32,22 @@ export interface QuestionDef {
  * - required: TRUE/FALSE or 1/0
  */
 function parseQuestionsFromCsv(csv: string): QuestionDef[] {
+  // Validate CSV file before processing
+  const validation = validateCsvFile(csv);
+  if (!validation.isValid) {
+    throw new Error(`Invalid CSV file: ${validation.error}`);
+  }
+
   const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true });
   if (parsed.errors?.length) {
     console.warn("CSV parse warnings", parsed.errors);
   }
 
   const rows = (parsed.data as any[]).filter(Boolean);
-  const questions: QuestionDef[] = rows.map((r, idx) => {
+  const questions: QuestionDef[] = [];
+  
+  for (let idx = 0; idx < rows.length; idx++) {
+    const r = rows[idx];
     const rawType = String(r.type ?? r.Type ?? "").toLowerCase().trim();
     const type: QuestionType = (rawType === "" ? "textarea" : (rawType as QuestionType));
     const optsRaw = String(r.options ?? r.Options ?? "");
@@ -41,7 +58,8 @@ function parseQuestionsFromCsv(csv: string): QuestionDef[] {
     const keyRaw = String(r.key ?? r.Key ?? "").trim();
     const label = String(r.label ?? r.Label ?? "").trim();
     const key = keyRaw || slugify(label);
-    return {
+    
+    const questionData = {
       order: Number.isFinite(orderVal) ? orderVal : idx + 1,
       section: String(r.section ?? r.Section ?? "General").trim() || "General",
       key,
@@ -51,8 +69,16 @@ function parseQuestionsFromCsv(csv: string): QuestionDef[] {
       required,
       placeholder: String(r.placeholder ?? r.Placeholder ?? "") || undefined,
       help: String(r.help ?? r.Help ?? "") || undefined,
-    } satisfies QuestionDef;
-  });
+    };
+    
+    // Validate and sanitize each question
+    const questionValidation = validateQuestionData(questionData);
+    if (questionValidation.isValid && questionValidation.sanitized) {
+      questions.push(questionValidation.sanitized as QuestionDef);
+    } else {
+      console.warn(`Skipping invalid question ${idx + 1}: ${questionValidation.error}`);
+    }
+  }
 
   const sorted = questions.sort((a, b) =>
     a.section.localeCompare(b.section) || a.order - b.order
@@ -65,7 +91,7 @@ export async function fetchSurveyQuestions(survey: SurveyKey): Promise<QuestionD
   // 1) Local override via uploaded CSV (stored in localStorage)
   try {
     if (typeof window !== "undefined") {
-      const override = localStorage.getItem(`survey:overrideCsv:${survey}`);
+      const override = getSecureLocalStorage(`survey:overrideCsv:${survey}`);
       if (override && override.trim()) {
         return parseQuestionsFromCsv(override);
       }
@@ -78,10 +104,41 @@ export async function fetchSurveyQuestions(survey: SurveyKey): Promise<QuestionD
   const url = surveyConfig[survey]?.questionsCsvUrl;
   if (!url) return null;
 
+  // Validate external URL for security
+  if (!validateExternalUrl(url)) {
+    console.error("Invalid or unsafe URL:", url);
+    return null;
+  }
+
+  // Rate limiting for external requests
+  if (!rateLimiter.canMakeRequest(`fetch-${survey}`)) {
+    console.warn("Rate limit exceeded for survey questions fetch");
+    return null;
+  }
+
   try {
-    const res = await fetch(url, { cache: "no-store" });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+    
+    const res = await fetch(url, { 
+      cache: "no-store",
+      signal: controller.signal,
+      headers: {
+        'Accept': 'text/csv,text/plain',
+      }
+    });
+    
+    clearTimeout(timeoutId);
+    
     if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+    
     const csv = await res.text();
+    
+    // Additional check for response size
+    if (csv.length > 1024 * 1024) { // 1MB limit
+      throw new Error("Response too large");
+    }
+    
     return parseQuestionsFromCsv(csv);
   } catch (e) {
     console.error("Failed to load survey questions", e);
