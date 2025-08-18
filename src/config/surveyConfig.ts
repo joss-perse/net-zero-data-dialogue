@@ -7,17 +7,17 @@ export const surveyConfig = {
   landlord: {
     endpoint: "",
     sheetUrl: "https://docs.google.com/spreadsheets/d/1uCCDuri2SyybYVKX6M_kHvX0vvNjNVTGdPNp1cF5JLg/edit?usp=sharing",
-    questionsCsvUrl: "",
+    questionsCsvUrl: "/templates/landlord-survey-template.csv",
   },
   advisor: {
     endpoint: "",
     sheetUrl: "https://docs.google.com/spreadsheets/d/1a2xWXBmOGMgpsdCJHYfbj4EPMjWWmZPa1oOvZsHYNGw/edit?usp=sharing",
-    questionsCsvUrl: "",
+    questionsCsvUrl: "/templates/advisor-survey-template.csv",
   },
   investor: {
     endpoint: "",
     sheetUrl: "", // Add your Google Sheet URL for Investor survey responses
-    questionsCsvUrl: "",
+    questionsCsvUrl: "/templates/investor-survey-template.csv",
   },
 } as const;
 
