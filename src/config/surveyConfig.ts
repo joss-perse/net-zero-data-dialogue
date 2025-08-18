@@ -2,7 +2,7 @@ export const surveyConfig = {
   tenant: {
     endpoint: "", // Paste your Google Apps Script Web App URL for Tenant survey
     sheetUrl: "https://docs.google.com/spreadsheets/d/1AsbjgjnCA1Nmn6J50VK-JdAu0cEZOzm7vSZtIaiGues/edit?usp=sharing", // Public Google Sheet URL to view live responses
-    questionsCsvUrl: "", // Publish your Google Sheet (questions) to the web as CSV and paste the CSV URL here
+    questionsCsvUrl: "/templates/tenant-survey-template.csv", // Local CSV template with updated questions
   },
   landlord: {
     endpoint: "",
