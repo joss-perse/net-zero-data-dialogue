@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import TenantSurvey from "./pages/surveys/TenantSurvey";
@@ -11,32 +12,41 @@ import LandlordSurvey from "./pages/surveys/LandlordSurvey";
 import AdvisorSurvey from "./pages/surveys/AdvisorSurvey";
 import InvestorSurvey from "./pages/surveys/InvestorSurvey";
 import AddQuestionGuide from "./pages/AddQuestionGuide";
+import SurveyAdmin from "./pages/SurveyAdmin";
 import AppHeader from "@/components/AppHeader";
+import { initializeSurveyConfig } from "./lib/configInit";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <HelmetProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AppHeader />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/surveys/tenant" element={<TenantSurvey />} />
-            <Route path="/surveys/landlord" element={<LandlordSurvey />} />
-            <Route path="/surveys/advisor" element={<AdvisorSurvey />} />
-            <Route path="/surveys/investors" element={<InvestorSurvey />} />
-            <Route path="/add-question-guide" element={<AddQuestionGuide />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </HelmetProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  useEffect(() => {
+    initializeSurveyConfig();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <HelmetProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AppHeader />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/surveys/tenant" element={<TenantSurvey />} />
+              <Route path="/surveys/landlord" element={<LandlordSurvey />} />
+              <Route path="/surveys/advisor" element={<AdvisorSurvey />} />
+              <Route path="/surveys/investors" element={<InvestorSurvey />} />
+              <Route path="/add-question-guide" element={<AddQuestionGuide />} />
+              <Route path="/admin" element={<SurveyAdmin />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </HelmetProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

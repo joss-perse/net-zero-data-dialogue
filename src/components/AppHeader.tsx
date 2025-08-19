@@ -115,6 +115,11 @@ const AppHeader = () => {
                   Add new question guide
                 </Link>
               </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/admin">
+                  Survey Admin Panel
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Survey questions</DropdownMenuLabel>
               {surveys.map((s) => (

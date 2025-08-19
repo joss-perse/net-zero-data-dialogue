@@ -1,8 +1,22 @@
 import { validateExternalUrl, sanitizeText, rateLimiter } from './security';
 
 export async function submitToGoogleSheet(endpoint: string, payload: Record<string, any>) {
+  // Check localStorage for saved endpoint if not provided in config
   if (!endpoint) {
-    throw new Error("Survey endpoint not configured. Please add your Google Apps Script Web App URL to surveyConfig.ts");
+    const savedEndpoints = localStorage.getItem('survey-endpoints');
+    if (savedEndpoints) {
+      try {
+        const parsed = JSON.parse(savedEndpoints);
+        const surveyType = payload.form;
+        endpoint = parsed[surveyType];
+      } catch (error) {
+        console.warn('Failed to load saved endpoints:', error);
+      }
+    }
+  }
+
+  if (!endpoint) {
+    throw new Error("Survey endpoint not configured. Please configure your Google Apps Script Web App URL in the admin panel or surveyConfig.ts");
   }
 
   // Validate endpoint URL for security

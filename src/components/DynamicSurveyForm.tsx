@@ -12,13 +12,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import SurveyConfigurationAlert from "@/components/SurveyConfigurationAlert";
 
 interface DynamicSurveyFormProps {
   survey: SurveyKey;
   endpoint: string;
+  onConfigureEndpoint?: () => void;
 }
 
-const DynamicSurveyForm: React.FC<DynamicSurveyFormProps> = ({ survey, endpoint }) => {
+const DynamicSurveyForm: React.FC<DynamicSurveyFormProps> = ({ survey, endpoint, onConfigureEndpoint }) => {
   const { toast } = useToast();
   const [questions, setQuestions] = useState<QuestionDef[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -82,6 +84,11 @@ const DynamicSurveyForm: React.FC<DynamicSurveyFormProps> = ({ survey, endpoint 
 
   return (
     <div className="space-y-8">
+      <SurveyConfigurationAlert 
+        surveyType={survey}
+        onConfigureClick={() => onConfigureEndpoint?.()}
+      />
+      
       <aside className="rounded-md border bg-card/50 p-4 text-sm text-muted-foreground">
         Questions are loaded from your Google Sheet (CSV). Reorder or edit there to update instantly. Need a template? <a className="underline" href="/templates/survey-questions-template.csv" target="_blank" rel="noreferrer">Download CSV template</a>.
       </aside>

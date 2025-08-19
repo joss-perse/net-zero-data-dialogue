@@ -13,6 +13,9 @@ import { submitToGoogleSheet } from "@/lib/submitToGoogle";
 import { surveyConfig } from "@/config/surveyConfig";
 import DynamicSurveyForm from "@/components/DynamicSurveyForm";
 import { Download, Upload } from "lucide-react";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import SurveyEndpointConfig from "@/components/SurveyEndpointConfig";
 
 const schema = z.object({
   businessIndustry: z.string().min(1, "Please enter your industry or SIC code"),
@@ -40,14 +43,31 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const TenantSurvey = () => {
+  const [showConfigDialog, setShowConfigDialog] = useState(false);
+
   if (surveyConfig.tenant.questionsCsvUrl) {
     return (
-      <SurveyLayout
-        title="Tenant Survey"
-        description="Help shape a practical, privacy-conscious framework for landlord access to energy data in pursuit of net zero."
-      >
-        <DynamicSurveyForm survey="tenant" endpoint={surveyConfig.tenant.endpoint} />
-      </SurveyLayout>
+      <>
+        <SurveyLayout
+          title="Tenant Survey"
+          description="Help shape a practical, privacy-conscious framework for landlord access to energy data in pursuit of net zero."
+        >
+          <DynamicSurveyForm 
+            survey="tenant" 
+            endpoint={surveyConfig.tenant.endpoint}
+            onConfigureEndpoint={() => setShowConfigDialog(true)}
+          />
+        </SurveyLayout>
+
+        <Dialog open={showConfigDialog} onOpenChange={setShowConfigDialog}>
+          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Configure Survey Endpoints</DialogTitle>
+            </DialogHeader>
+            <SurveyEndpointConfig />
+          </DialogContent>
+        </Dialog>
+      </>
     );
   }
 
